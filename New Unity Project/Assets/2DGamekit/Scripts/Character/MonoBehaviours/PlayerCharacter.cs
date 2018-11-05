@@ -33,7 +33,7 @@ namespace Gamekit2D
 
         [Range(0f, 1f)] public float airborneAccelProportion;
         [Range(0f, 1f)] public float airborneDecelProportion;
-        public float gravity = 0f;
+        public float gravity = 15f;
         public float jumpSpeed = 20f;
         public float jumpAbortSpeedReduction = 100f;
 
@@ -578,15 +578,20 @@ namespace Gamekit2D
 
         public void setRevertGravity() 
         {
-            gravity = 38f;
-            //m_Transform.localRotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 180));
+            gravity = 100f;
+            m_Transform.localPosition = new Vector3(0, 0);
+            m_Transform.localRotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 0));
         }
 
         public void setReversedGravity() 
         {
-            //m_Transform.localPosition = new Vector3(0, 5);
-            gravity = -50f;
-            //m_Transform.localRotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 180));
+            m_Transform.localPosition = new Vector3(0, 5);
+            gravity = -38f;
+            m_Transform.localRotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 180));
+        }
+
+        public float getGravity() {
+            return gravity;
         }
 
         public bool CheckForFallInput()

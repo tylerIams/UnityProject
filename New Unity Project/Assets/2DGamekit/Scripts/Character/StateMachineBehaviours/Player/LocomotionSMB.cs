@@ -15,20 +15,24 @@ namespace Gamekit2D
                 m_MonoBehaviour.GroundedHorizontalMovement(true);
                 m_MonoBehaviour.GroundedVerticalMovement();
                 m_MonoBehaviour.CheckForCrouching();
-                m_MonoBehaviour.CheckForGrounded();
+                
                 m_MonoBehaviour.CheckForPushing();
                 m_MonoBehaviour.CheckForHoldingGun();
                 m_MonoBehaviour.CheckAndFireGun();
-
-               
-             if (m_MonoBehaviour.CheckForRevertGravity()) {
-                 m_MonoBehaviour.CheckForRevertGravity();
-             }
 
              if (m_MonoBehaviour.CheckForReverseGravity()) {
                  m_MonoBehaviour.setReversedGravity();
              }
 
+            if (m_MonoBehaviour.CheckForRevertGravity())
+            {
+                m_MonoBehaviour.setRevertGravity();
+            }
+
+            if (m_MonoBehaviour.getGravity() > 0.0)
+            {
+                m_MonoBehaviour.CheckForGrounded();
+            }
 
             if (m_MonoBehaviour.CheckForJumpInput())
                 m_MonoBehaviour.SetVerticalMovement(m_MonoBehaviour.jumpSpeed);
