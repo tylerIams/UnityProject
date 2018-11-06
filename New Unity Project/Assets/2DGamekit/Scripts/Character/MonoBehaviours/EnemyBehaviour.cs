@@ -96,6 +96,8 @@ namespace Gamekit2D
         protected readonly int m_HashDeathPara = Animator.StringToHash("Death");
         protected readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
 
+        float i = 0;
+
         private void Awake()
         {
             m_CharacterController2D = GetComponent<CharacterController2D>();
@@ -153,11 +155,23 @@ namespace Gamekit2D
 
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
 
-            m_CharacterController2D.CheckCapsuleEndCollisions();
+            if (gravity > 0)
+                m_CharacterController2D.CheckCapsuleEndCollisions();
 
             UpdateTimers();
 
-            m_Animator.SetBool(m_HashGroundedPara, m_CharacterController2D.IsGrounded);
+            if (gravity > 0) 
+                m_Animator.SetBool(m_HashGroundedPara, m_CharacterController2D.IsGrounded);
+            else
+                m_Animator.SetBool(m_HashGroundedPara, true);
+
+            i++;
+            if (i == 60) {
+                gravity = -gravity;
+                if (gravity > 0)
+                    SetMoveVector(new Vector2(-5, -5));
+                i = 0;
+            }
         }
 
         void UpdateTimers()
@@ -465,6 +479,13 @@ namespace Gamekit2D
 
         public void Hit(Damager damager, Damageable damageable)
         {
+            if (damageable.CurrentHealth <= 2) {
+                m_SpriteRenderer.color = Color.magenta;
+                DisableDamage();
+                damageable.GainHealth(1);
+                return;
+            }
+
             if (damageable.CurrentHealth <= 0)
                 return;
 

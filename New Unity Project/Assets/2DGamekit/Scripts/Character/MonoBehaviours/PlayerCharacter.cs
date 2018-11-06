@@ -579,15 +579,17 @@ namespace Gamekit2D
         public void setRevertGravity() 
         {
             gravity = 100f;
-            m_Transform.localPosition = new Vector3(0, 0);
+            m_Transform.localPosition = new Vector3(m_Transform.position.x, 0);
             m_Transform.localRotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 0));
+            spriteRenderer.flipX = true;
         }
 
         public void setReversedGravity() 
         {
-            m_Transform.localPosition = new Vector3(0, 5);
+            m_Transform.localPosition = new Vector3(m_Transform.position.x, 5);
             gravity = -38f;
-            m_Transform.localRotation = Quaternion.AngleAxis(180, new Vector3(0, 0, 180));
+            m_Transform.localRotation = Quaternion.AngleAxis(180, new Vector3(180, 0, 0));
+            spriteRenderer.flipX = true;
         }
 
         public float getGravity() {
